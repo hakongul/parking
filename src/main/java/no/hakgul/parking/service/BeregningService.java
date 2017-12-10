@@ -9,13 +9,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class BeregningService {
 
-    private M1 m1 = new M1();
-    private M2 m2 = new M2();
-    private M3 m3 = new M3();
+    //Kan for eksempel settes til en miljøvariabel slik at man kan implementere oppførsel basert på prod/testmiljø
+    private boolean prod = true;
 
     public BeregningService() {
     }
 
+    private M1 m1 = new M1();
+    private M2 m2 = new M2(prod);
+    private M3 m3 = new M3(prod);
+
+    /**
+     * Service som fordeler beregningene til de respektive klassene som har ansvar for hver sin sone
+     *
+     * @param sone String
+     * @param antallMinutter int
+     * @return PrisV1 objekt med resultatet
+     */
     public PrisV1 beregnPris(String sone, int antallMinutter) {
         switch(sone) {
             case "M1" :
@@ -28,7 +38,7 @@ public class BeregningService {
                 return m3.beregnPris(antallMinutter);
 
             default :
-                return null;
+                throw new RuntimeException("Sonen som ble sendt inn finnes ikke");
         }
     }
 

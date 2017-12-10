@@ -9,10 +9,6 @@ public class M1 implements Sone {
 
     @Override
     public PrisV1 beregnPris(int antallMinutter) {
-        return new PrisV1(sum(antallMinutter), sone);
-    }
-
-    private int sum(int antallMinutter){
-        return antallMinutter;
+        return new PrisV1(antallMinutter, sone);
     }
 }

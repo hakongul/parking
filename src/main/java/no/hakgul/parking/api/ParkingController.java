@@ -14,8 +14,7 @@ public class ParkingController {
     private BeregningService beregningService = new BeregningService();
 
     /**
-     * REST get metode som tar inn sone og antall minutter det skal parkeres, og kaller korrekt beregningsmetode
-     * for gitt parkeringssone.
+     * REST get metode som tar inn sone og antall minutter det skal parkeres, og kaller beregningsservicen.
      *
      * @param sone String
      * @param minutter int
@@ -24,12 +23,7 @@ public class ParkingController {
     @RequestMapping(value = "/takst", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public PrisV1 beregnTakst(@RequestParam("sone") String sone,
                               @RequestParam("minutter") int minutter) {
-        long start = System.currentTimeMillis();
 
-        PrisV1 resultat = beregningService.beregnPris(sone, minutter);
-
-        System.out.println("Tid brukt: " + (System.currentTimeMillis() - start));
-
-        return resultat;
+        return beregningService.beregnPris(sone, minutter);
     }
 }

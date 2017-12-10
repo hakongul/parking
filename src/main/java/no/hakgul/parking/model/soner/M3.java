@@ -3,14 +3,22 @@ package no.hakgul.parking.model.soner;
 import no.hakgul.parking.model.PrisV1;
 import no.hakgul.parking.model.Sone;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public class M3 implements Sone {
 
-    private String sone = "M3";
-    private int dagMinuttPris = 2;
-    private int kveldMinuttPris = 3;
+    private final String sone = "M3";
+    private final int dagMinuttPris = 2;
+    private final int kveldMinuttPris = 3;
+    private final boolean prod;
+
+    private Clock clock;
+
+    public M3(boolean prod) {
+        this.prod = prod;
+    }
 
     @Override
     public PrisV1 beregnPris(int antallMinutter) {
@@ -18,7 +26,12 @@ public class M3 implements Sone {
     }
 
     private int sum(int antallMinutter) {
-        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime date;
+        if(prod){
+            date = LocalDateTime.now();
+        } else {
+            date = LocalDateTime.now(clock);
+        }
 
         if(date.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return 0;
@@ -31,5 +44,9 @@ public class M3 implements Sone {
         } else {
             return antallMinutter*kveldMinuttPris;
         }
+    }
+
+    void setClock(Clock clock) {
+        this.clock = clock;
     }
 }
