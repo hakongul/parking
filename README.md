@@ -1,7 +1,7 @@
 # Parking
 
 ## Tjenestens formål
-API'et tilbyr utregning av takst for parkeringssonene M1, M2 og M3 via REST.
+API'et tilbyr utregning av takst for parkeringssonene M1, M2 og M3 via en webservice.
 
 
 ## Tjenesten takst
