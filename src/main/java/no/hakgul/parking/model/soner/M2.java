@@ -7,6 +7,13 @@ import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+/**
+ * Klasse som tar for seg beregning av pris for parkering i sone M2.
+ * Parametere for beregning er:
+ * - 100 kroner per påbegynte time på hverdager.
+ * - I helgen er prisen det dobbelte, altså 200 kroner per påbegynte time.
+ */
+
 public class M2 implements Sone {
 
     private final boolean prod;
@@ -40,7 +47,7 @@ public class M2 implements Sone {
     }
 
     private int begynteTimer(int antallMinutter) {
-        return (antallMinutter+60) / 60;
+        return (antallMinutter+59) / 60;
     }
 
     void setClock(Clock clock) {

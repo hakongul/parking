@@ -15,6 +15,7 @@ public class ParkingController {
 
     /**
      * REST get metode som tar inn sone og antall minutter det skal parkeres, og kaller beregningsservicen.
+     * Mapper opp endepunkt til stien hostname/takst (eks http://localhost:10000/takst )
      *
      * @param sone String
      * @param minutter int

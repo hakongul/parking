@@ -22,7 +22,19 @@ public class M2Test {
     private final LocalDateTime monday = LocalDateTime.of(2017, 11, 20, 12, 0);
 
     @Test
-    public void getTakstFor_63Minutes_Monday() throws Exception {
+    public void getTakstFor_60Minutes_Monday() {
+        Clock mockClock = Clock.fixed(monday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
+
+        m2 = new M2(produksjon);
+        m2.setClock(mockClock);
+
+        PrisV1 resultat = m2.beregnPris(60);
+        assert(resultat.getPris() == 100);
+        assert(resultat.getSone().equalsIgnoreCase(sone2));
+    }
+
+    @Test
+    public void getTakstFor_63Minutes_Monday() {
         Clock mockClock = Clock.fixed(monday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m2 = new M2(produksjon);
@@ -34,7 +46,7 @@ public class M2Test {
     }
 
     @Test
-    public void getTakstFor_447Minutes_Monday() throws Exception {
+    public void getTakstFor_447Minutes_Monday() {
         Clock mockClock = Clock.fixed(monday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m2 = new M2(produksjon);
@@ -46,7 +58,19 @@ public class M2Test {
     }
 
     @Test
-    public void getTakstFor_63Minutes_Sunday() throws Exception {
+    public void getTakstFor_60Minutes_Sunday() {
+        Clock mockClock = Clock.fixed(sunday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
+
+        m2 = new M2(produksjon);
+        m2.setClock(mockClock);
+
+        PrisV1 resultat = m2.beregnPris(60);
+        assert(resultat.getPris() == 200);
+        assert(resultat.getSone().equalsIgnoreCase(sone2));
+    }
+
+    @Test
+    public void getTakstFor_63Minutes_Sunday() {
         Clock mockClock = Clock.fixed(sunday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m2 = new M2(produksjon);
@@ -58,7 +82,7 @@ public class M2Test {
     }
 
     @Test
-    public void getTakstFor_447Minutes_Sunday() throws Exception {
+    public void getTakstFor_447Minutes_Sunday() {
         Clock mockClock = Clock.fixed(sunday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m2 = new M2(produksjon);

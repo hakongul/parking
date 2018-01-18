@@ -7,6 +7,14 @@ import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+/**
+ * Klasse som tar for seg beregningen av pris for parkering i sone M3.
+ * Parametere for beregning er:
+ * - Mandag til lørdag mellom 08:00 og 16:00 er første time gratis, deretter koster det 2 kroner per påbegynte minutt.
+ * - Mandag til lørdag utenom disse tidspunktene koster det 3 kroner minuttet.
+ * - Søndager er parkering gratis.
+ */
+
 public class M3 implements Sone {
 
     private final String sone = "M3";
@@ -36,7 +44,7 @@ public class M3 implements Sone {
         if(date.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return 0;
         } else if(date.getHour() > 8 && date.getHour() < 16) {
-            if(antallMinutter < 60) {
+            if(antallMinutter <= 60) {
                 return 0;
             } else {
                 return (antallMinutter - 60)*dagMinuttPris;

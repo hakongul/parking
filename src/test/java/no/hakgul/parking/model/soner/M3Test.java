@@ -23,7 +23,7 @@ public class M3Test {
     private final LocalDateTime monday_evening = LocalDateTime.of(2017, 11, 20, 18, 32);
 
     @Test
-    public void getTakstFor_45Minutes_Monday_Between_8_16() throws Exception {
+    public void getTakstFor_45Minutes_Monday_Between_8_16() {
         Clock mockClock = Clock.fixed(monday_noon.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
@@ -35,7 +35,31 @@ public class M3Test {
     }
 
     @Test
-    public void getTakstFor_162Minutes_Monday_Between_8_16() throws Exception {
+    public void getTakstFor_60Minutes_Monday_Between_8_16() {
+        Clock mockClock = Clock.fixed(monday_noon.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
+
+        m3 = new M3(produksjon);
+        m3.setClock(mockClock);
+
+        PrisV1 resultat = m3.beregnPris(60);
+        assert(resultat.getPris() == 0);
+        assert(resultat.getSone().equalsIgnoreCase(sone3));
+    }
+
+    @Test
+    public void getTakstFor_61Minutes_Monday_Between_8_16() {
+        Clock mockClock = Clock.fixed(monday_noon.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
+
+        m3 = new M3(produksjon);
+        m3.setClock(mockClock);
+
+        PrisV1 resultat = m3.beregnPris(61);
+        assert(resultat.getPris() == 2);
+        assert(resultat.getSone().equalsIgnoreCase(sone3));
+    }
+
+    @Test
+    public void getTakstFor_162Minutes_Monday_Between_8_16() {
         Clock mockClock = Clock.fixed(monday_noon.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
@@ -47,7 +71,7 @@ public class M3Test {
     }
 
     @Test
-    public void getTakstFor_45Minutes_Monday_Between_16_8() throws Exception {
+    public void getTakstFor_45Minutes_Monday_Between_16_8() {
         Clock mockClock = Clock.fixed(monday_evening.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
@@ -60,7 +84,7 @@ public class M3Test {
     }
 
     @Test
-    public void getTakstFor_162Minutes_Monday_Between_16_8() throws Exception {
+    public void getTakstFor_162Minutes_Monday_Between_16_8() {
         Clock mockClock = Clock.fixed(monday_evening.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
@@ -72,7 +96,7 @@ public class M3Test {
     }
 
     @Test
-    public void getTakstFor_45Minutes_Sunday() throws Exception {
+    public void getTakstFor_45Minutes_Sunday() {
         Clock mockClock = Clock.fixed(sunday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
@@ -84,7 +108,7 @@ public class M3Test {
     }
 
     @Test
-    public void getTakstFor_162Minutes_Sunday() throws Exception {
+    public void getTakstFor_162Minutes_Sunday() {
         Clock mockClock = Clock.fixed(sunday.atZone(ZoneId.systemDefault()).toInstant(), ZoneId.systemDefault());
 
         m3 = new M3(produksjon);
