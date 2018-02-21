@@ -41,17 +41,27 @@ public class M3 implements Sone {
             date = LocalDateTime.now(clock);
         }
 
-        if(date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        int pris = 0;
+        LocalDateTime slutt = date.plusMinutes(antallMinutter);
+        if(date.getDayOfWeek() == DayOfWeek.SUNDAY && slutt.getDayOfWeek() == DayOfWeek.SUNDAY && antallMinutter <= 1440)
+            //Vi er innenfor en og samme Søndag. gratis
             return 0;
-        } else if(date.getHour() > 8 && date.getHour() < 16) {
-            if(antallMinutter <= 60) {
-                return 0;
-            } else {
-                return (antallMinutter - 60)*dagMinuttPris;
+        else {
+            for(int i = 0; i < antallMinutter; i++) {
+                if(date.plusMinutes(i).getHour() >= 8 && date.plusMinutes(i).getHour() < 16) {
+                    if (date.plusMinutes(i).getDayOfWeek() != DayOfWeek.SUNDAY && i >= 60) {
+                        pris += dagMinuttPris;
+                    }
+                } else {
+                    if (date.plusMinutes(i).getDayOfWeek() != DayOfWeek.SUNDAY) {
+                        pris += kveldMinuttPris;
+                    }
+                }
             }
-        } else {
-            return antallMinutter*kveldMinuttPris;
         }
+
+        return pris;
+
     }
 
     void setClock(Clock clock) {

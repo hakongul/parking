@@ -37,13 +37,22 @@ public class M2 implements Sone {
             date = LocalDateTime.now(clock);
         }
 
-        if(date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
-            int timepris_helg = 200;
-            return begynteTimer(antallMinutter) * timepris_helg;
-        } else {
-            int timepris = 100;
-            return begynteTimer(antallMinutter) * timepris;
+        int antallTimer = begynteTimer(antallMinutter);
+
+        int pris = 0;
+
+        for(int i = 0; i < antallTimer; i++){
+            if(date.plusHours(i).getDayOfWeek() == DayOfWeek.SATURDAY || date.plusHours(i).getDayOfWeek() == DayOfWeek.SUNDAY) {
+                int timepris_helg = 200;
+                pris += timepris_helg;
+            } else {
+                int timepris = 100;
+                pris += timepris;
+            }
         }
+
+        return pris;
+
     }
 
     private int begynteTimer(int antallMinutter) {
